@@ -19,13 +19,17 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+/*项目指路：
+main->模块初始化，基本操作逻辑
+*/
+#include "drv_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,6 +39,22 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define Motor_Control()\
+    {\
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed1);\
+        HAL_GPIO_WritePin(&DIR1_GPIO_Port,DIR1_Pin,dir1);\
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed2);\
+        HAL_GPIO_WritePin(&DIR2_GPIO_Port,DIR2_Pin,dir2);\
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed3);\
+        HAL_GPIO_WritePin(&DIR3_GPIO_Port,DIR3_Pin,dir3);\
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed4);\
+        HAL_GPIO_WritePin(&DIR4_GPIO_Port,DIR4_Pin,dir4);\
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);\
+        HAL_GPIO_WritePin(&DIR5_GPIO_Port,DIR5_Pin,dir5);\
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);\
+        __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,angle_servo);\
+        HAL_GPIO_WritePin(&SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);\
+    }\
 
 /* USER CODE END PD */
 
@@ -46,12 +66,37 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-PID_HandleTypeDef hpid;
+uint8_t rx_buffer[256];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+void Serialplot_Call_Back()
+{
+  //if receive data from serial plot
+};
+
+uint8_t jdy_init_data[] = "AT+BAUD9";
+void jdy31_init()
+{
+  UART_Send_Data(&huart2, jdy_init_data, sizeof(jdy_init_data) - 1);
+}
+
+void tim_start()
+{
+  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start(&htim1);
+  HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_Base_Start(&htim4);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+};
 
 /* USER CODE END PFP */
 
@@ -88,6 +133,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
@@ -95,11 +141,14 @@ int main(void)
   MX_TIM4_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  Motor_Init();
-  PID_Init();
-  Bluetooth_Init();
-  Ultrasonic_Init();
-  ADC_Init();
+  Uart_Init(&huart3, rx_buffer, 256, Serialplot_Call_Back);
+
+  PID_set();
+  jdy31_init();
+
+  tim_start();
+ 
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,13 +159,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     Motor_Control();
-    PID_Control();
-    uint32_t distance = Ultrasonic_Read();
-    uint32_t voltage = ADC_Read();
-    char buffer[50];
-    sprintf(buffer, "Distance: %lu cm, Voltage: %lu mV\r\n", distance, voltage);
-    Bluetooth_Transmit(buffer);
-    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

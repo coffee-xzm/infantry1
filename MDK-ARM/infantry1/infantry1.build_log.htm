@@ -1,0 +1,151 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ��Vision V5.35.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: j 644334593@qq.com, edf, LIC=14HV2-92R96-QD8KD-8HVAK-GP91X-9WZUU
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.35.0.2
+Toolchain Path:  D:\keil\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.35.0.2
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
+Dialog DLL:      TCM.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+e:\stm_projects\infantry1\MDK-ARM\infantry1.uvprojx
+Project File Date:  02/28/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\keil\ARM\ARMCC\Bin'
+Build target 'infantry1'
+assembling startup_stm32f103xb.s...
+compiling main.c...
+../Core/Src/main.c(144): error:  #167: argument of type "void (*)()" is incompatible with parameter of type "UART_Call_Back"
+    Uart_Init(&huart3, rx_buffer, 10, Serialplot_Call_Back);
+../Core/Src/main.c(146): error:  #20: identifier "PID_set" is undefined
+    PID_set();
+../Core/Src/main.c(148): error:  #20: identifier "ADC_Init" is undefined
+    ADC_Init();
+../Core/Src/main.c(162): error:  #20: identifier "speed1" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "dir1" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "speed2" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "dir2" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "speed3" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "dir3" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "speed4" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "dir4" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "speed5" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "dir5" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "speed_snail" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #20: identifier "angle_servo" is undefined
+      Motor_Control();
+../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
+      Motor_Control();
+../Core/Src/main.c(163): error:  #20: identifier "ADC_Check" is undefined
+      ADC_Check();
+../Core/Src/main.c: 0 warnings, 22 errors
+compiling drv_uart.c...
+E:\校内\电控\my_drv\drv_uart.c(76): error:  #20: identifier "UART4" is undefined
+      else if (huart->Instance == UART4)
+E:\校内\电控\my_drv\drv_uart.c(83): error:  #20: identifier "UART5" is undefined
+      else if (huart->Instance == UART5)
+E:\校内\电控\my_drv\drv_uart.c(90): error:  #20: identifier "USART6" is undefined
+      else if (huart->Instance == USART6)
+E:\校内\电控\my_drv\drv_uart.c(97): error:  #20: identifier "UART7" is undefined
+      else if (huart->Instance == UART7)
+E:\校内\电控\my_drv\drv_uart.c(104): error:  #20: identifier "UART8" is undefined
+      else if (huart->Instance == UART8)
+E:\校内\电控\my_drv\drv_uart.c(160): error:  #20: identifier "UART4" is undefined
+      else if (huart->Instance == UART4)
+E:\校内\电控\my_drv\drv_uart.c(165): error:  #20: identifier "UART5" is undefined
+      else if (huart->Instance == UART5)
+E:\校内\电控\my_drv\drv_uart.c(170): error:  #20: identifier "USART6" is undefined
+      else if (huart->Instance == USART6)
+E:\校内\电控\my_drv\drv_uart.c(175): error:  #20: identifier "UART7" is undefined
+      else if (huart->Instance == UART7)
+E:\校内\电控\my_drv\drv_uart.c(180): error:  #20: identifier "UART8" is undefined
+      else if (huart->Instance == UART8)
+E:\У��\���\my_drv\drv_uart.c: 0 warnings, 10 errors
+compiling usart.c...
+compiling tim.c...
+compiling gpio.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling dma.c...
+compiling stm32f1xx_hal_exti.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal.c...
+compiling adc.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal_msp.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_adc_ex.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_adc.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_uart.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling system_stm32f1xx.c...
+"infantry1\infantry1.axf" - 32 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.8.0.pack
+                ARM.CMSIS.5.8.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.5.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.1.0.5.pack
+                Keil.STM32F1xx_DFP.1.0.5
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_infantry1
+  D:\keil\ARM\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include
+  D:\keil\ARM\Packs\Keil\STM32F1xx_DFP\1.0.5\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.5.0
+      Include file:  CMSIS\Core\Include\tz_context.h
+Target not created.
+Build Time Elapsed:  00:00:03
+</pre>
+</body>
+</html>
