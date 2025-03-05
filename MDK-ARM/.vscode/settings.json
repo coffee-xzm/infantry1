@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "main.h": "c",
-        "drv_uart.h": "c"
+        "drv_uart.h": "c",
+        "hcsr04.h": "c"
     }
 }

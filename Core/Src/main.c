@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
 #include "dma.h"
 #include "tim.h"
 #include "usart.h"
@@ -30,31 +29,18 @@
 main->模块初始化，基本操作逻辑
 */
 #include "drv_uart.h"
+#include "dvc_serialplot.h"
+#include "hcsr04.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+Class_Serialplot serialplot;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define Motor_Control()\
-    {\
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed1);\
-        HAL_GPIO_WritePin(&DIR1_GPIO_Port,DIR1_Pin,dir1);\
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed2);\
-        HAL_GPIO_WritePin(&DIR2_GPIO_Port,DIR2_Pin,dir2);\
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed3);\
-        HAL_GPIO_WritePin(&DIR3_GPIO_Port,DIR3_Pin,dir3);\
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed4);\
-        HAL_GPIO_WritePin(&DIR4_GPIO_Port,DIR4_Pin,dir4);\
-        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);\
-        HAL_GPIO_WritePin(&DIR5_GPIO_Port,DIR5_Pin,dir5);\
-        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);\
-        __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,angle_servo);\
-        HAL_GPIO_WritePin(&SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);\
-    }\
+
 
 /* USER CODE END PD */
 
@@ -98,6 +84,23 @@ void tim_start()
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
 };
 
+void Motor_Control()
+    {
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed1);
+        HAL_GPIO_WritePin(&DIR1_GPIO_Port,DIR1_Pin,dir1);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed2);
+        HAL_GPIO_WritePin(&DIR2_GPIO_Port,DIR2_Pin,dir2);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed3);
+        HAL_GPIO_WritePin(&DIR3_GPIO_Port,DIR3_Pin,dir3);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed4);
+        HAL_GPIO_WritePin(&DIR4_GPIO_Port,DIR4_Pin,dir4);
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+        HAL_GPIO_WritePin(&DIR5_GPIO_Port,DIR5_Pin,dir5);
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);
+        __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,angle_servo);
+        HAL_GPIO_WritePin(&SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);
+        pid.TIM_Adjust_PeriodElapsedCallback();
+    }
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -134,7 +137,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
@@ -142,6 +144,7 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   Uart_Init(&huart3, rx_buffer, 256, Serialplot_Call_Back);
+  serialplot.Init(&huart2, 0, NULL);
 
   PID_set();
   jdy31_init();
@@ -171,7 +174,6 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -201,16 +203,30 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-  {
-    Error_Handler();
-  }
 }
 
 /* USER CODE BEGIN 4 */
-
+/**
+ * @description: 定时器输出捕获中断
+ * @param {TIM_HandleTypeDef} *htim
+ * @return {*}
+ */
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)    //捕获回调函数
+{
+  Hcsr04TimIcIsr(htim);
+}
+ 
+/**
+ * @description: 定时器溢出中断
+ * @param {*}
+ * @return {*}
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)    //在中断回调函数中添加用户代码
+{
+  Hcsr04TimOverflowIsr(htim);
+  serialplot.Set_Data(Hcsr04Read(),gimbal.angleread());
+  serialplot.TIM_Add_PeriodElapsedCallback();
+}
 /* USER CODE END 4 */
 
 /**

@@ -22,19 +22,70 @@ Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
 e:\stm_projects\infantry1\MDK-ARM\infantry1.uvprojx
-Project File Date:  02/28/2025
+Project File Date:  03/05/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\keil\ARM\ARMCC\Bin'
 Build target 'infantry1'
-assembling startup_stm32f103xb.s...
+compiling alg_pid.cpp...
+E:\校内\电控\my_drv\alg_pid.h(75): error:  #321: data member initializer is not allowed
+      float Pre_Now = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(77): error:  #321: data member initializer is not allowed
+      float Pre_Target = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(79): error:  #321: data member initializer is not allowed
+      float Pre_Out = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(81): error:  #321: data member initializer is not allowed
+      float Pre_Error = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(86): error:  #321: data member initializer is not allowed
+      float Out = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(91): error:  #321: data member initializer is not allowed
+      float K_P = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(93): error:  #321: data member initializer is not allowed
+      float K_I = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(95): error:  #321: data member initializer is not allowed
+      float K_D = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(97): error:  #321: data member initializer is not allowed
+      float K_F = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(100): error:  #321: data member initializer is not allowed
+      float I_Out_Max = 0;
+E:\校内\电控\my_drv\alg_pid.h(102): error:  #321: data member initializer is not allowed
+      float Out_Max = 0;
+E:\校内\电控\my_drv\alg_pid.h(105): error:  #321: data member initializer is not allowed
+      float I_Variable_Speed_A = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(107): error:  #321: data member initializer is not allowed
+      float I_Variable_Speed_B = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(109): error:  #321: data member initializer is not allowed
+      float I_Separate_Threshold = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(112): error:  #321: data member initializer is not allowed
+      float Target = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(114): error:  #321: data member initializer is not allowed
+      float Now = 0.0f;
+E:\校内\电控\my_drv\alg_pid.h(119): error:  #321: data member initializer is not allowed
+      float Integral_Error = 0.0f;
+E:\У��\���\my_drv\alg_pid.cpp: 0 warnings, 17 errors
+compiling hcsr04.c...
+E:\校内\电控\my_drv\hcsr04.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif /* HCSR04_H_ */
+E:\校内\电控\my_drv\hcsr04.c(53): error:  #20: identifier "DelayUs" is undefined
+    DelayUs(10);  //  10us以上
+E:\校内\电控\my_drv\hcsr04.c(115): warning:  #1-D: last line of file ends without a newline
+  }
+E:\У��\���\my_drv\hcsr04.c: 2 warnings, 1 error
 compiling main.c...
+E:/校内/电控/my_drv/dvc_serialplot.h(87): error:  #321: data member initializer is not allowed
+      uint8_t Data_Number = 0;
+E:/校内/电控/my_drv/dvc_serialplot.h(89): error:  #321: data member initializer is not allowed
+      int8_t Variable_Index = 0;
+E:/校内/电控/my_drv/dvc_serialplot.h(91): error:  #321: data member initializer is not allowed
+      double Variable_Value = 0;
+../Core/Src/main.c(33): warning:  #14-D: extra text after expected end of preprocessing directive
+  #include "hcsr04.h""
+E:/校内/电控/my_drv/hcsr04.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif /* HCSR04_H_ */
 ../Core/Src/main.c(144): error:  #167: argument of type "void (*)()" is incompatible with parameter of type "UART_Call_Back"
-    Uart_Init(&huart3, rx_buffer, 10, Serialplot_Call_Back);
-../Core/Src/main.c(146): error:  #20: identifier "PID_set" is undefined
+    Uart_Init(&huart3, rx_buffer, 256, Serialplot_Call_Back);
+../Core/Src/main.c(147): error:  #20: identifier "PID_set" is undefined
     PID_set();
-../Core/Src/main.c(148): error:  #20: identifier "ADC_Init" is undefined
-    ADC_Init();
 ../Core/Src/main.c(162): error:  #20: identifier "speed1" is undefined
       Motor_Control();
 ../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
@@ -71,56 +122,67 @@ compiling main.c...
       Motor_Control();
 ../Core/Src/main.c(162): error:  #158: expression must be an lvalue or a function designator
       Motor_Control();
-../Core/Src/main.c(163): error:  #20: identifier "ADC_Check" is undefined
-      ADC_Check();
-../Core/Src/main.c: 0 warnings, 22 errors
-compiling drv_uart.c...
-E:\校内\电控\my_drv\drv_uart.c(76): error:  #20: identifier "UART4" is undefined
+../Core/Src/main.c: 2 warnings, 23 errors
+compiling dvc_serialplot.cpp...
+E:\校内\电控\my_drv\dvc_serialplot.h(87): error:  #321: data member initializer is not allowed
+      uint8_t Data_Number = 0;
+E:\校内\电控\my_drv\dvc_serialplot.h(89): error:  #321: data member initializer is not allowed
+      int8_t Variable_Index = 0;
+E:\校内\电控\my_drv\dvc_serialplot.h(91): error:  #321: data member initializer is not allowed
+      double Variable_Value = 0;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(53): error:  #20: identifier "UART4" is undefined
       else if (huart->Instance == UART4)
-E:\校内\电控\my_drv\drv_uart.c(83): error:  #20: identifier "UART5" is undefined
+E:\校内\电控\my_drv\dvc_serialplot.cpp(55): error:  #20: identifier "UART4_Manage_Object" is undefined
+          UART_Rx_Data = UART4_Manage_Object.Rx_Buffer;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(56): error:  #20: identifier "UART4_Tx_Data" is undefined
+          UART_Tx_Data = UART4_Tx_Data;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(58): error:  #20: identifier "UART5" is undefined
       else if (huart->Instance == UART5)
-E:\校内\电控\my_drv\drv_uart.c(90): error:  #20: identifier "USART6" is undefined
+E:\校内\电控\my_drv\dvc_serialplot.cpp(60): error:  #20: identifier "UART5_Manage_Object" is undefined
+          UART_Rx_Data = UART5_Manage_Object.Rx_Buffer;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(61): error:  #20: identifier "UART5_Tx_Data" is undefined
+          UART_Tx_Data = UART5_Tx_Data;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(63): error:  #20: identifier "USART6" is undefined
       else if (huart->Instance == USART6)
-E:\校内\电控\my_drv\drv_uart.c(97): error:  #20: identifier "UART7" is undefined
+E:\校内\电控\my_drv\dvc_serialplot.cpp(65): error:  #20: identifier "UART6_Manage_Object" is undefined
+          UART_Rx_Data = UART6_Manage_Object.Rx_Buffer;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(66): error:  #20: identifier "UART6_Tx_Data" is undefined
+          UART_Tx_Data = UART6_Tx_Data;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(68): error:  #20: identifier "UART7" is undefined
       else if (huart->Instance == UART7)
-E:\校内\电控\my_drv\drv_uart.c(104): error:  #20: identifier "UART8" is undefined
+E:\校内\电控\my_drv\dvc_serialplot.cpp(70): error:  #20: identifier "UART7_Manage_Object" is undefined
+          UART_Rx_Data = UART7_Manage_Object.Rx_Buffer;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(71): error:  #20: identifier "UART7_Tx_Data" is undefined
+          UART_Tx_Data = UART7_Tx_Data;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(73): error:  #20: identifier "UART8" is undefined
       else if (huart->Instance == UART8)
-E:\校内\电控\my_drv\drv_uart.c(160): error:  #20: identifier "UART4" is undefined
-      else if (huart->Instance == UART4)
-E:\校内\电控\my_drv\drv_uart.c(165): error:  #20: identifier "UART5" is undefined
-      else if (huart->Instance == UART5)
-E:\校内\电控\my_drv\drv_uart.c(170): error:  #20: identifier "USART6" is undefined
-      else if (huart->Instance == USART6)
-E:\校内\电控\my_drv\drv_uart.c(175): error:  #20: identifier "UART7" is undefined
-      else if (huart->Instance == UART7)
-E:\校内\电控\my_drv\drv_uart.c(180): error:  #20: identifier "UART8" is undefined
-      else if (huart->Instance == UART8)
-E:\У��\���\my_drv\drv_uart.c: 0 warnings, 10 errors
-compiling usart.c...
-compiling tim.c...
+E:\校内\电控\my_drv\dvc_serialplot.cpp(75): error:  #20: identifier "UART8_Manage_Object" is undefined
+          UART_Rx_Data = UART8_Manage_Object.Rx_Buffer;
+E:\校内\电控\my_drv\dvc_serialplot.cpp(76): error:  #20: identifier "UART8_Tx_Data" is undefined
+          UART_Tx_Data = UART8_Tx_Data;
+E:\У��\���\my_drv\dvc_serialplot.cpp: 0 warnings, 18 errors
+compiling dma.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_exti.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_tim_ex.c...
 compiling gpio.c...
 compiling stm32f1xx_hal_cortex.c...
-compiling dma.c...
-compiling stm32f1xx_hal_exti.c...
-compiling stm32f1xx_hal_rcc_ex.c...
 compiling stm32f1xx_it.c...
-compiling stm32f1xx_hal_pwr.c...
-compiling stm32f1xx_hal.c...
-compiling adc.c...
-compiling stm32f1xx_hal_flash.c...
+compiling tim.c...
 compiling stm32f1xx_hal_gpio_ex.c...
-compiling stm32f1xx_hal_msp.c...
+compiling usart.c...
 compiling stm32f1xx_hal_flash_ex.c...
-compiling stm32f1xx_hal_gpio.c...
-compiling stm32f1xx_hal_adc_ex.c...
-compiling stm32f1xx_hal_rcc.c...
-compiling stm32f1xx_hal_adc.c...
-compiling stm32f1xx_hal_dma.c...
-compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_msp.c...
 compiling stm32f1xx_hal_uart.c...
-compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_tim.c...
 compiling system_stm32f1xx.c...
-"infantry1\infantry1.axf" - 32 Error(s), 0 Warning(s).
+"infantry1\infantry1.axf" - 59 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -145,7 +207,7 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
 Target not created.
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
