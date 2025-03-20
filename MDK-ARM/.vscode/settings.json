@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "drv_uart.h": "c"
+    }
+}
