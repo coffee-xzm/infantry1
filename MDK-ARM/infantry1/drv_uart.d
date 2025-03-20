@@ -1,5 +1,5 @@
-infantry1\drv_uart.o: E:\校内\电控\my_drv\drv_uart.c
-infantry1\drv_uart.o: E:\校内\电控\my_drv\drv_uart.h
+infantry1\drv_uart.o: E:\study\electrical_control\my_drv\drv_uart.c
+infantry1\drv_uart.o: E:\study\electrical_control\my_drv\drv_uart.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 infantry1\drv_uart.o: ../Core/Inc/stm32f1xx_hal_conf.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
@@ -22,11 +22,16 @@ infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
-infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h
-infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 infantry1\drv_uart.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+infantry1\drv_uart.o: ../Core/Inc/usart.h
+infantry1\drv_uart.o: ../Core/Inc/main.h
+infantry1\drv_uart.o: E:/study/electrical_control/my_drv/dvc_serialplot.h
+infantry1\drv_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\stdarg.h
+infantry1\drv_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
+infantry1\drv_uart.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
+infantry1\drv_uart.o: E:/study/electrical_control/my_drv/alg_pid.h

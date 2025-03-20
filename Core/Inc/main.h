@@ -31,12 +31,44 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "dvc_serialplot.h"
+#include "alg_pid.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+/* 类实例对象声明 */
 
+extern Class_Serialplot serialplot;
+/* 接收缓冲区声明 */
+extern uint8_t rx_buffer[256];
+
+/* 电机速度变量声明 */
+extern uint16_t speed;         // 电机1速度
+// extern uint16_t speed2;         // 电机2速度
+// extern uint16_t speed3;         // 电机3速度
+// extern uint16_t speed4;         // 电机4速度
+extern uint16_t speed5;         // 电机5速度
+extern uint16_t speed_snail;    // 小蜗轮电机速度
+
+/* 电机方向变量声明 */
+extern uint8_t dirs;
+extern GPIO_PinState dir1;      // 电机1方向
+extern GPIO_PinState dir2;      // 电机2方向
+extern GPIO_PinState dir3;      // 电机3方向
+extern GPIO_PinState dir4;      // 电机4方向
+// extern GPIO_PinState dir5;      // 电机5方向
+
+/* 舵机控制变量声明 */
+extern uint8_t angle_servo;    // 舵机PWM值
+
+/* PID控制器实例声明 */
+extern Class_PID pid;           // PID控制器实例
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

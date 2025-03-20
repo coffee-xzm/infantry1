@@ -1,9 +1,9 @@
-infantry1\dvc_serialplot.o: E:\校内\电控\my_drv\dvc_serialplot.cpp
-infantry1\dvc_serialplot.o: E:\校内\电控\my_drv\dvc_serialplot.h
+infantry1\dvc_serialplot.o: E:\study\electrical_control\my_drv\dvc_serialplot.cpp
+infantry1\dvc_serialplot.o: E:\study\electrical_control\my_drv\dvc_serialplot.h
 infantry1\dvc_serialplot.o: D:\keil\ARM\ARMCC\Bin\..\include\stdarg.h
 infantry1\dvc_serialplot.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 infantry1\dvc_serialplot.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
-infantry1\dvc_serialplot.o: E:\校内\电控\my_drv\drv_uart.h
+infantry1\dvc_serialplot.o: E:\study\electrical_control\my_drv\drv_uart.h
 infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 infantry1\dvc_serialplot.o: ../Core/Inc/stm32f1xx_hal_conf.h
 infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h
@@ -32,3 +32,6 @@ infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pw
 infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 infantry1\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+infantry1\dvc_serialplot.o: ../Core/Inc/main.h
+infantry1\dvc_serialplot.o: E:/study/electrical_control/my_drv/alg_pid.h
+infantry1\dvc_serialplot.o: D:\keil\ARM\ARMCC\Bin\..\include\cstdarg

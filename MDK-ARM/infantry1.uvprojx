@@ -328,7 +328,7 @@
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>5</v6Lang>
+            <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -336,10 +336,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--cpp</MiscControls>
+              <MiscControls>--cpp11</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;E:/校内/电控/my_drv</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;E:/study/electrical_control/my_drv</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,6 +393,31 @@
         <Group>
           <GroupName>Application/User/Core</GroupName>
           <Files>
+            <File>
+              <FileName>alg_pid.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\alg_pid.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_serialplot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\dvc_serialplot.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>hcsr04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\hcsr04.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_math.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\drv_math.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\drv_uart.c</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -478,21 +503,6 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>alg_pid.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>E:\校内\电控\my_drv\alg_pid.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>dvc_serialplot.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>E:\校内\电控\my_drv\dvc_serialplot.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>hcsr04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>E:\校内\电控\my_drv\hcsr04.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,8 +601,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.5.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
         <targetInfos>
           <targetInfo name="infantry1"/>
         </targetInfos>

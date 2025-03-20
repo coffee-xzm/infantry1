@@ -25,17 +25,18 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-/*项目指路：
-main->模块初始化，基本操作逻辑
-*/
+
 #include "drv_uart.h"
 #include "dvc_serialplot.h"
 #include "hcsr04.h"
+#include "alg_pid.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 Class_Serialplot serialplot;
+Class_PID pid;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -53,21 +54,40 @@ Class_Serialplot serialplot;
 
 /* USER CODE BEGIN PV */
 uint8_t rx_buffer[256];
+/* 电机速度变量初始化 */
+uint16_t speed = 0;    // 电机1速度
+// uint16_t speed2 = 0;    // 电机2速度
+// uint16_t speed3 = 0;    // 电机3速度
+// uint16_t speed4 = 0;    // 电机4速度
+uint16_t speed5 = 0;    // 电机5速度
+uint16_t speed_snail = 0;   // snail电机速度
+
+/* 电机方向变量初始化 */
+uint8_t dirs;
+GPIO_PinState dir1 = GPIO_PIN_RESET;    // 电机1方向
+GPIO_PinState dir2 = GPIO_PIN_RESET;    // 电机2方向
+GPIO_PinState dir3 = GPIO_PIN_RESET;    // 电机3方向
+GPIO_PinState dir4 = GPIO_PIN_RESET;    // 电机4方向
+// GPIO_PinState dir5 = GPIO_PIN_RESET;    // 电机5方向
+
+/* 舵机控制变量初始化 */
+uint8_t angle_servo = 0;               // 舵机PWM值 256份
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void Serialplot_Call_Back()
+void Serialplot_Call_Back(uint8_t *Buffer, uint16_t Length)
 {
   //if receive data from serial plot
 };
 
-uint8_t jdy_init_data[] = "AT+BAUD9";
-void jdy31_init()
-{
-  UART_Send_Data(&huart2, jdy_init_data, sizeof(jdy_init_data) - 1);
-}
+// uint8_t jdy_init_data[] = "AT+BAUD4";
+// void jdy31_init()
+// {
+//   UART_Send_Data(&huart3, jdy_init_data, sizeof(jdy_init_data) - 1);
+// }
 
 void tim_start()
 {
@@ -86,21 +106,23 @@ void tim_start()
 
 void Motor_Control()
     {
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed1);
-        HAL_GPIO_WritePin(&DIR1_GPIO_Port,DIR1_Pin,dir1);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed2);
-        HAL_GPIO_WritePin(&DIR2_GPIO_Port,DIR2_Pin,dir2);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed3);
-        HAL_GPIO_WritePin(&DIR3_GPIO_Port,DIR3_Pin,dir3);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed4);
-        HAL_GPIO_WritePin(&DIR4_GPIO_Port,DIR4_Pin,dir4);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed);
+        HAL_GPIO_WritePin(DIR1_GPIO_Port,DIR1_Pin,dir1);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed);
+        HAL_GPIO_WritePin(DIR2_GPIO_Port,DIR2_Pin,dir2);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed);
+        HAL_GPIO_WritePin(DIR3_GPIO_Port,DIR3_Pin,dir3);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed);
+        HAL_GPIO_WritePin(DIR4_GPIO_Port,DIR4_Pin,dir4);
         __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
-        HAL_GPIO_WritePin(&DIR5_GPIO_Port,DIR5_Pin,dir5);
+        HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
         __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);
-        __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,angle_servo);
-        HAL_GPIO_WritePin(&SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);
+        __HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,pid.Get_Out());
+        // HAL_GPIO_WritePin(SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);
         pid.TIM_Adjust_PeriodElapsedCallback();
     }
+  
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -115,7 +137,7 @@ void Motor_Control()
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  pid.TIM_Adjust_PeriodElapsedCallback();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -144,10 +166,16 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   Uart_Init(&huart3, rx_buffer, 256, Serialplot_Call_Back);
-  serialplot.Init(&huart2, 0, NULL);
 
-  PID_set();
-  jdy31_init();
+  char** command;
+  serialplot.Init(&huart3,6,command,Serialplot_Data_Type_INT32,0xAB);
+
+  pid.Init(1,1,1);
+
+	Hcsr04Init(&htim3,TIM_CHANNEL_4);
+	
+  //PID_set();
+  // jdy31_init();
 
   tim_start();
  
@@ -161,6 +189,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    uint8_t da[] = {0,1,0,1};
+    UART_Send_Data(&huart3,da,4);
     Motor_Control();
   }
   /* USER CODE END 3 */
@@ -214,6 +244,8 @@ void SystemClock_Config(void)
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)    //捕获回调函数
 {
   Hcsr04TimIcIsr(htim);
+  serialplot.Set_Data(Hcsr04Info.distance);
+  serialplot.TIM_Add_PeriodElapsedCallback();
 }
  
 /**
@@ -224,8 +256,11 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)    //捕获回调函数
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)    //在中断回调函数中添加用户代码
 {
   Hcsr04TimOverflowIsr(htim);
-  serialplot.Set_Data(Hcsr04Read(),gimbal.angleread());
-  serialplot.TIM_Add_PeriodElapsedCallback();
+  if(htim->Instance == TIM1)
+  {
+    // 触发新的HC-SR04测量
+    Hcsr04Start();
+  }
 }
 /* USER CODE END 4 */
 
