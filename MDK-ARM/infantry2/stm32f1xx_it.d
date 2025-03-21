@@ -28,10 +28,10 @@ infantry2\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.
 infantry2\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 infantry2\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 infantry2\stm32f1xx_it.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-infantry2\stm32f1xx_it.o: E:\study\electrical_control\my_drv\dvc_serialplot.h
+infantry2\stm32f1xx_it.o: E:/study/electrical_control/my_drv/dvc_serialplot.h
 infantry2\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\stdarg.h
 infantry2\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\string.h
 infantry2\stm32f1xx_it.o: D:\keil\ARM\ARMCC\Bin\..\include\math.h
-infantry2\stm32f1xx_it.o: E:\study\electrical_control\my_drv\drv_uart.h
-infantry2\stm32f1xx_it.o: E:\study\electrical_control\my_drv\alg_pid.h
+infantry2\stm32f1xx_it.o: E:/study/electrical_control/my_drv/drv_uart.h
+infantry2\stm32f1xx_it.o: E:/study/electrical_control/my_drv/alg_pid.h
 infantry2\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h

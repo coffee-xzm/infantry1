@@ -182,9 +182,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    uint8_t da[] = {0,1,0,1};
-    //UART_Send_Data(&huart3,da,4);
+
     Motor_Control();
+
   }
   /* USER CODE END 3 */
 }

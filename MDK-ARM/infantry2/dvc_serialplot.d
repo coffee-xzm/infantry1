@@ -33,5 +33,5 @@ infantry2\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_ti
 infantry2\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 infantry2\dvc_serialplot.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 infantry2\dvc_serialplot.o: ../Core/Inc/main.h
-infantry2\dvc_serialplot.o: E:\study\electrical_control\my_drv\alg_pid.h
+infantry2\dvc_serialplot.o: E:/study/electrical_control/my_drv/alg_pid.h
 infantry2\dvc_serialplot.o: D:\keil\ARM\ARMCC\Bin\..\include\cstdarg

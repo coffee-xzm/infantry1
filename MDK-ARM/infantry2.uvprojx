@@ -339,7 +339,7 @@
               <MiscControls>--cpp11</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;E:\study\electrical_control\my_drv</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;E:/study/electrical_control/my_drv</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,6 +394,26 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
+              <FileName>alg_pid.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\alg_pid.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\drv_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>dvc_serialplot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\dvc_serialplot.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>hcsr04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>E:\study\electrical_control\my_drv\hcsr04.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -427,26 +447,6 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>alg_pid.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>E:\study\electrical_control\my_drv\alg_pid.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>drv_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>E:\study\electrical_control\my_drv\drv_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>dvc_serialplot.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>E:\study\electrical_control\my_drv\dvc_serialplot.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>hcsr04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>E:\study\electrical_control\my_drv\hcsr04.c</FilePath>
             </File>
           </Files>
         </Group>
