@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"infan\startup_stm32f103xb.o"
+"infan\main.o"
+"infan\gpio.o"
+"infan\dma.o"
+"infan\tim.o"
+"infan\usart.o"
+"infan\stm32f1xx_it.o"
+"infan\stm32f1xx_hal_msp.o"
+"infan\stm32f1xx_hal_gpio_ex.o"
+"infan\stm32f1xx_hal_tim.o"
+"infan\stm32f1xx_hal_tim_ex.o"
+"infan\stm32f1xx_hal.o"
+"infan\stm32f1xx_hal_rcc.o"
+"infan\stm32f1xx_hal_rcc_ex.o"
+"infan\stm32f1xx_hal_gpio.o"
+"infan\stm32f1xx_hal_dma.o"
+"infan\stm32f1xx_hal_cortex.o"
+"infan\stm32f1xx_hal_pwr.o"
+"infan\stm32f1xx_hal_flash.o"
+"infan\stm32f1xx_hal_flash_ex.o"
+"infan\stm32f1xx_hal_exti.o"
+"infan\stm32f1xx_hal_uart.o"
+"infan\system_stm32f1xx.o"
+--strict --scatter "infan\infan.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "infan.map" -o infan\infan.axf
