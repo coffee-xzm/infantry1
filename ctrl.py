@@ -18,6 +18,7 @@ speed5 = 0      # 4位 (最大值15)
 speed_snail = 0 # 4位 (最大值15)
 angle_servo = 128 # 8位 (0-255)
 
+
 # 速度增量
 SPEED_INCREMENT = 50
 ANGLE_INCREMENT = 5
@@ -25,10 +26,12 @@ MOTOR5_INCREMENT = 1
 SNAIL_INCREMENT = 1
 
 # 方向映射
-DIR_FORWARD = 0x01   # 前
-DIR_BACKWARD = 0x02  # 后
-DIR_LEFT = 0x04      # 左
-DIR_RIGHT = 0x08     # 右
+DIR_FORWARD = 0x0F   # 前
+DIR_BACKWARD = 0x00  # 后
+DIR_LEFT = 0x06      # 左
+DIR_RIGHT = 0x09     # 右
+DIR_ROTATE_LEFT = 0x03  # 左转 (0101)
+DIR_ROTATE_RIGHT = 0x0C  # 右转 (1010)
 
 # 串口初始化
 ser = None
@@ -73,18 +76,27 @@ def send_command():
 
 def keyboard_listener():
     global speed, dirs, speed5, speed_snail, angle_servo, is_running
+
+    user_speed = speed
     
     print("键盘控制说明:")
     print("W/A/S/D - 控制方向 (前/左/后/右)")
+    print("C/V - 左转/右转 (原地旋转)")
     print("↑/↓ - 增加/减少速度")
     print("←/→ - 调整舵机角度")
     print("Q/E - 增加/减少电机5速度")
-    print("Z/X - 增加/减少蜗轮速度")
+    print("Z - 开始发弹")
+    print("X - 停止发弹")
     print("空格 - 紧急停止 (所有电机速度归零)")
     print("ESC - 退出程序")
     
+    last_command_time = time.time()
+    command_interval = 0.05  # 发送命令的时间间隔(秒)
+    
     while is_running:
-        # 方向控制 (WASD)
+        current_time = time.time()
+        
+        # 方向控制 (WASD) - 每次循环重置方向
         new_dirs = 0
         if keyboard.is_pressed('w'):
             new_dirs |= DIR_FORWARD
@@ -95,18 +107,36 @@ def keyboard_listener():
         if keyboard.is_pressed('d'):
             new_dirs |= DIR_RIGHT
         
-        # 只在方向改变时更新
-        if new_dirs != dirs:
-            dirs = new_dirs
+        # 添加旋转控制
+        if keyboard.is_pressed('c'):
+            # 左转优先级高于WASD
+            new_dirs = DIR_ROTATE_LEFT
+        if keyboard.is_pressed('v'):
+            # 右转优先级高于WASD和左转
+            new_dirs = DIR_ROTATE_RIGHT
+
+        if new_dirs != 0:
+            speed = user_speed  # 使用用户设置的速度
+        else:
+            speed = 0  # 无方向键按下，速度为0
+        
+        # 更新方向并以固定间隔发送命令
+        dirs = new_dirs
+        if current_time - last_command_time >= command_interval:
             send_command()
+            last_command_time = current_time
         
         # 速度控制
         if keyboard.is_pressed('up'):
-            speed = min(speed + SPEED_INCREMENT, 4095)
+            user_speed = min(user_speed + SPEED_INCREMENT, 4095)
+            if new_dirs != 0:  # 只有在有方向时才立即应用新速度
+                speed = user_speed
             send_command()
             time.sleep(0.1)  # 防抖
         elif keyboard.is_pressed('down'):
-            speed = max(speed - SPEED_INCREMENT, 0)
+            user_speed = max(user_speed - SPEED_INCREMENT, 0)
+            if new_dirs != 0:  # 只有在有方向时才立即应用新速度
+                speed = user_speed
             send_command()
             time.sleep(0.1)  # 防抖
             
@@ -129,16 +159,6 @@ def keyboard_listener():
             speed5 = max(speed5 - MOTOR5_INCREMENT, 0)
             send_command()
             time.sleep(0.1)  # 防抖
-            
-        # # 蜗轮控制
-        # if keyboard.is_pressed('z'):
-        #     speed_snail = min(speed_snail + SNAIL_INCREMENT, 15)
-        #     send_command()
-        #     time.sleep(0.1)  # 防抖
-        # elif keyboard.is_pressed('x'):
-        #     speed_snail = max(speed_snail - SNAIL_INCREMENT, 0)
-        #     send_command()
-        #     time.sleep(0.1)  # 防抖
             
         # 紧急停止
         if keyboard.is_pressed('space'):

@@ -50,11 +50,11 @@ void UART_Process_Data(void)
     Variable_Value = (double)control_value;
     
     // 按位解析控制数据
-    speed = 2000-((control_value & 0x00FF0000) >> 16)*10;       // 高12位 (31-20)
-    dirs = (control_value & 0x0000F000) >> 12;        // 中间4位 (19-16)
-    speed5 = ((control_value & 0x00000F00) >> 8)*100;      // 接下来4位 (15-12)
-    speed_snail = (control_value & 0x000000F0) >> 4;  // 接下来4位 (11-8)
-    angle_servo = (control_value & 0x0000000F);       // 低8位 (7-0)
+    speed = 2000-((control_value & 0xFFF00000) >> 20);       // 高12位 (31-20)
+    dirs = (control_value & 0x000F0000) >> 16;        // 中间4位 (19-16)
+    speed5 = ((control_value & 0x0000F000) >> 12)*100;      // 接下来4位 (15-12)
+    speed_snail = (control_value & 0x00000F00) >> 8;  // 接下来4位 (11-8)
+    angle_servo = (control_value & 0x000000FF);       // 低8位 (7-0)
     
     // 根据dirs设置各个方向控制位
     dir1 = (dirs & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET;

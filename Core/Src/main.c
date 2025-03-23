@@ -101,7 +101,7 @@ void Motor_Control()
           HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1200);
 					HAL_Delay(300);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,2500);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,2000);
 					HAL_Delay(1000);
 				}
         //__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);
