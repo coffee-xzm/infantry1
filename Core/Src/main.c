@@ -50,7 +50,7 @@ uint16_t speed = 2000;    // 电机1速度
 // uint16_t speed2 = 0;    // 电机2速度
 // uint16_t speed3 = 0;    // 电机3速度
 // uint16_t speed4 = 0;    // 电机4速度
-uint16_t speed5 = 2000;    // 电机5速度
+uint16_t speed5 = 1999;    // 电机5速度
 uint16_t speed_snail = 0;   // snail电机速度
 
 /* 电机方向变量初始化 */
@@ -86,26 +86,44 @@ void tim_start()
 
 void Motor_Control()
     {
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed);
-        HAL_GPIO_WritePin(DIR1_GPIO_Port,DIR1_Pin,dir1);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed);
-        HAL_GPIO_WritePin(DIR2_GPIO_Port,DIR2_Pin,dir2);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed);
-        HAL_GPIO_WritePin(DIR3_GPIO_Port,DIR3_Pin,dir3);
-        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed);
-        HAL_GPIO_WritePin(DIR4_GPIO_Port,DIR4_Pin,dir4);
-        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
-        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
-        HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
         
+        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
 			  if(speed_snail != 0){
           
 					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
-					HAL_Delay(300);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1400);
-					HAL_Delay(10000);
+					// 第一段延时300ms
+          uint32_t startTime = HAL_GetTick();
+          while(HAL_GetTick() - startTime < 300) {
+          // 检查speed_snail是否变为0
+            if(speed_snail == 0) {
+            // 如果变为0，立即退出延时
+            //__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0); // 或其他需要的值
+            break;
+          }
+          // 可以添加一个小延时以减少CPU负担
+          HAL_Delay(1);
+        }
+    
+        // 只有在speed_snail仍然不为0时才继续第二段延时
+        if(speed_snail != 0) {
+          __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1400);
+        
+          // 第二段延时10000ms
+          startTime = HAL_GetTick();
+          while(HAL_GetTick() - startTime < 10000) {
+            // 检查speed_snail是否变为0
+            if(speed_snail == 0) {
+                // 如果变为0，立即退出延时
+                //__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0); // 或其他需要的值
+                break;
+            }
+            // 可以添加一个小延时以减少CPU负担
+            HAL_Delay(1);
+          }
+        } 
 
 				}
+        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
         //__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);
         //__HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,pid.Get_Out());
         // HAL_GPIO_WritePin(SERVO_DIR_GPIO_Port,SERVO_DIR_Pin,angle_servo);
@@ -148,9 +166,21 @@ int main(void)
   MX_TIM4_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-tim_start();
-UART_DMA_Start_Receive();
-__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+  tim_start();
+  UART_DMA_Start_Receive();
+  __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+
+  __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed);
+  HAL_GPIO_WritePin(DIR1_GPIO_Port,DIR1_Pin,dir1);
+  __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed);
+  HAL_GPIO_WritePin(DIR2_GPIO_Port,DIR2_Pin,dir2);
+  __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed);
+  HAL_GPIO_WritePin(DIR3_GPIO_Port,DIR3_Pin,dir3);
+  __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed);
+  HAL_GPIO_WritePin(DIR4_GPIO_Port,DIR4_Pin,dir4);
+  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
+  __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+  HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -21,6 +21,8 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "main.h"
+#include "tim.h"
 #define RX_BUFFER_SIZE 16
 uint8_t Rx_Data[RX_BUFFER_SIZE];  // 接收缓冲区
 double Variable_Value = 0;         // 用于存储解析后的控制值
@@ -69,6 +71,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if(huart->Instance == USART3)
     {
         UART_Process_Data();        // 处理接收到的数据
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_2,speed);
+        HAL_GPIO_WritePin(DIR1_GPIO_Port,DIR1_Pin,dir1);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_1,speed);
+        HAL_GPIO_WritePin(DIR2_GPIO_Port,DIR2_Pin,dir2);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_4,speed);
+        HAL_GPIO_WritePin(DIR3_GPIO_Port,DIR3_Pin,dir3);
+        __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed);
+        HAL_GPIO_WritePin(DIR4_GPIO_Port,DIR4_Pin,dir4);
+        
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+        HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
         HAL_UART_Receive_DMA(&huart3, Rx_Data, 5); // 重新启动DMA接收
     }
 }
