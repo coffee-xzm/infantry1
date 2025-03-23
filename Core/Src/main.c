@@ -94,15 +94,17 @@ void Motor_Control()
         HAL_GPIO_WritePin(DIR3_GPIO_Port,DIR3_Pin,dir3);
         __HAL_TIM_SetCompare(&htim4,TIM_CHANNEL_3,speed);
         HAL_GPIO_WritePin(DIR4_GPIO_Port,DIR4_Pin,dir4);
-        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
+        __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
+        __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
+        HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
         
 			  if(speed_snail != 0){
-          __HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,speed5);
-          HAL_GPIO_WritePin(DIR5_GPIO_Port,DIR5_Pin,GPIO_PIN_SET);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1200);
+          
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,800);
 					HAL_Delay(300);
-					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,2000);
-					HAL_Delay(1000);
+					__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,1400);
+					HAL_Delay(10000);
+
 				}
         //__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,speed_snail);
         //__HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_1,pid.Get_Out());

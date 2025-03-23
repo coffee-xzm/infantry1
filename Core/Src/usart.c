@@ -52,7 +52,7 @@ void UART_Process_Data(void)
     // 按位解析控制数据
     speed = 2000-((control_value & 0xFFF00000) >> 20);       // 高12位 (31-20)
     dirs = (control_value & 0x000F0000) >> 16;        // 中间4位 (19-16)
-    speed5 = ((control_value & 0x0000F000) >> 12)*100;      // 接下来4位 (15-12)
+    speed5 = ((control_value & 0x0000F000) >> 12)*142;      // 接下来4位 (15-12)
     speed_snail = (control_value & 0x00000F00) >> 8;  // 接下来4位 (11-8)
     angle_servo = (control_value & 0x000000FF);       // 低8位 (7-0)
     

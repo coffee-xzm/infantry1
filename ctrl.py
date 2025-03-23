@@ -68,16 +68,17 @@ def send_command():
     data_bytes = struct.pack("<BI", 0xAB, control_value)
     
     # 打印调试信息
-    print(f"发送: 帧头=AB, 数据={control_value:08X}, 方向={dirs:X}, 速度={speed}, 舵机={angle_servo}")
+    print(f"发送: 帧头=AB, 数据={control_value:08X}, 方向={dirs:X}, 速度={user_speed}, 拨弹轮={speed5},舵机={angle_servo}")
     print(f"原始字节: {' '.join([f'{b:02X}' for b in data_bytes])}")
     
     if ser and ser.is_open:
         ser.write(data_bytes)
 
 def keyboard_listener():
-    global speed, dirs, speed5, speed_snail, angle_servo, is_running
+    global speed, dirs, speed5, speed_snail, angle_servo, is_running,user_speed
 
     user_speed = speed
+    user_speed5 = speed5
     
     print("键盘控制说明:")
     print("W/A/S/D - 控制方向 (前/左/后/右)")
@@ -150,20 +151,28 @@ def keyboard_listener():
             send_command()
             time.sleep(0.1)  # 防抖
             
-        # 电机5控制
+        # 电机5控制 - 修改Q/E按键处理逻辑
         if keyboard.is_pressed('q'):
-            speed5 = min(speed5 + MOTOR5_INCREMENT, 15)
+            user_speed5 = min(user_speed5 + MOTOR5_INCREMENT, 14)
+            # 只在发弹状态下才实际应用speed5值
+            if speed_snail > 0:
+                speed5 = user_speed5
             send_command()
+            print(f"设置拨弹轮速度: {user_speed5} {'(生效)' if speed_snail > 0 else '(待机)'}")
             time.sleep(0.1)  # 防抖
         elif keyboard.is_pressed('e'):
-            speed5 = max(speed5 - MOTOR5_INCREMENT, 0)
+            user_speed5 = max(user_speed5 - MOTOR5_INCREMENT, 0)
+            # 只在发弹状态下才实际应用speed5值
+            if speed_snail > 0:
+                speed5 = user_speed5
             send_command()
+            print(f"设置拨弹轮速度: {user_speed5} {'(生效)' if speed_snail > 0 else '(待机)'}")
             time.sleep(0.1)  # 防抖
             
-        # 紧急停止
+        # 紧急停止也需要修改
         if keyboard.is_pressed('space'):
             speed = 0
-            speed5 = 0
+            speed5 = 14
             speed_snail = 0
             dirs = 0
             send_command()
@@ -175,14 +184,16 @@ def keyboard_listener():
             is_running = False
             print("程序退出")
 
-        # 蜗轮控制 - 只用于控制是否发弹
+        # 蜗轮控制 - 修改Z键处理，开始发弹时设置speed5为用户值
         if keyboard.is_pressed('z'):
             speed_snail = 1  # 启动发弹
+            speed5 = user_speed5  # 应用用户设置的speed5值
             send_command()
             print("开始发弹")
             time.sleep(0.1)  # 防抖
         elif keyboard.is_pressed('x'):
             speed_snail = 0  # 停止发弹
+            speed5 = 14      # 清除speed5，停止拨弹轮
             send_command()
             print("停止发弹")
             time.sleep(0.1)  # 防抖
